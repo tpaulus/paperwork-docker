@@ -25,7 +25,8 @@ RUN apk --update add \
 
 RUN git clone --depth 1 https://github.com/twostairs/paperwork.git .
 
-COPY paperwork.ico /app/public/favicon.ico
+COPY strict.patch /opt/paperwork/
+RUN patch -p1 < strict.patch && rm strict.patch
 
 RUN curl -sSL https://getcomposer.org/installer | php
 
@@ -42,9 +43,12 @@ RUN npm install -g gulp bower \
 	&& sed -ir '/showIssueReportingLink/s/true/false/' app/config/paperwork.php
 
 COPY lighttpd.conf /etc/lighttpd/
+COPY run.sh runner.sh
+
+RUN chmod +x runner.sh
 
 VOLUME ["/opt/paperwork/frontend/app/storage/"]
 
-CMD ["lighttpd", "-f", "/etc/lighttpd/lighttpd.conf", "-D"]
+CMD ["runner.sh"]
 
 EXPOSE 80
