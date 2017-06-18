@@ -7,17 +7,11 @@ and related setup.
 ## Container Creation
 This container assumes that you have a MySQL DB provisioned outside of the
 container, like in a separate docker instance. Provide the necessary
-configuration via the environment variables listed
+configuration, like DB Credentials during the Paperwork setup process.
 
 ```sh
 docker create --name paperwork \
-  -e DB_PORT_3306_TCP_ADDR=host \
-  -e DB_ENV_MYSQL_DATABASE=db_name \
-  -e DB_ENV_MYSQL_USER=username \
-  -e DB_ENV_MYSQL_PASSWORD=password \
-  -e DB_PORT_3306_TCP_PORT=3306 \
   -p 80:80 \
-  -v /etc/docker/paperwork:/app/app/storage/ \
   tpaulus/paperwork-docker
 ```
 

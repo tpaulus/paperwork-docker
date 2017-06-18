@@ -43,12 +43,8 @@ RUN npm install -g gulp bower \
 	&& sed -ir '/showIssueReportingLink/s/true/false/' app/config/paperwork.php
 
 COPY lighttpd.conf /etc/lighttpd/
-COPY run.sh runner.sh
+VOLUME "/opt/paperwork/frontend/app/storage/"
 
-RUN chmod +x runner.sh
-
-VOLUME ["/opt/paperwork/frontend/app/storage/"]
-
-CMD ["./runner.sh"]
+CMD ["lighttpd", "-f", "/etc/lighttpd/lighttpd.conf","-D"]
 
 EXPOSE 80
