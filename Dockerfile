@@ -49,6 +49,6 @@ RUN chmod +x runner.sh
 
 VOLUME ["/opt/paperwork/frontend/app/storage/"]
 
-CMD ["runner.sh"]
+CMD ["./runner.sh"]
 
 EXPOSE 80
